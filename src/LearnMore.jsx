@@ -1,9 +1,3 @@
-import { useState } from "react";
-import { Fragment } from "react";
-import { Menu, Transition, Switch } from "@headlessui/react";
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-
 function LearnMore() {
   return (
         <div className="flex p-1">

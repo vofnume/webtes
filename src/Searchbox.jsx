@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { Fragment } from "react";
-import { Menu, Transition, Switch } from "@headlessui/react";
-import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
+import { Menu } from "@headlessui/react";
 import { ChevronDownIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
-
-import { Combobox } from "@headlessui/react";
 import LearnMore from "./LearnMore";
 
 const peeps = [

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Fragment } from "react";
-import { Menu, Transition, Switch } from "@headlessui/react";
+import { Menu, Switch } from "@headlessui/react";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import LearnMore from "./LearnMore";
@@ -10,7 +9,7 @@ function DropDown({setSB}) {
   return (
     <div className="flex">
       <div className="flex flex-col">
-        
+
         <div className="flex border-b p-2">
           <GlobeAmericasIcon
             className="-ml-1 mr-2 h-10 w-10"
