@@ -2,146 +2,189 @@ import { useState } from "react";
 import { Fragment } from "react";
 import { Menu, Transition, Switch } from "@headlessui/react";
 import { GlobeAmericasIcon } from "@heroicons/react/20/solid";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
 
-import { Combobox } from '@headlessui/react'
+import { Combobox } from "@headlessui/react";
+import LearnMore from "./LearnMore";
 
-const people = [
-  '',
-  'Durward Reynolds',
-  'Kenton Towne',
-  'Therese Wunsch',
-  'Benedict Kessler',
-  'Katelyn Rohan',
-]
+const peeps = [
+  {
+    name: "Wade Cooper",
+    url: "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+  {
+    name: "Arlene Mccoy",
+    url: "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  },
+];
+
+const prods = [
+  { name: "products", url: "P" },
+  { name: "engineering", url: "E" },
+];
 
 
 
-function SearchBox() {
-  const [tenabled, settEnabled] = useState(false);
-  const [selectedPerson, setSelectedPerson] = useState(people[0])
-  const [query, setQuery] = useState('')
+function SearchBox({ setSB }) {
+  const [selectedtags, setST] = useState([]);
 
-  const filteredPeople =
-    query === ''
-      ? people
-      : people.filter((person) => {
-          return person.toLowerCase().includes(query.toLowerCase())
+  const [people, setPeople] = useState(peeps);
+
+  const [products, setProducts] = useState(prods);
+
+  const searchItems = (val) => {
+        if(val !== "") {
+         const filpeeps =  peeps.filter((item) => {
+            return Object.values(item).join('').toLowerCase().includes(val.toLowerCase())
         })
 
+        const filprods = prods.filter((item) => {
+          return Object.values(item).join('').toLowerCase().includes(val.toLowerCase())
+      })
+        setPeople(filpeeps);
+        setProducts(filprods);
+
+        } else {
+          setPeople(peeps);
+          setProducts(prods);
+
+        }
+  }
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className="flex flex-col gap-0 bg-gray-100 w-96">
+      <div className="relative rounded-none bg-gray-100 shadow-none border-b m-0">
+        <div className="inset-y-0 left-0 flex">
+          <button onClick={() => setSB(false)}>
+            <ArrowLeftIcon className="w-5 h-5" />
+          </button>
+          <input onChange={(e) => searchItems(e.target.value)}
+            type="text"
+            className="block w-full rounded-none border-none bg-gray-100 pl-2 pr-12 mr-2 focus:border-none focus:ring-gray-200 sm:text-sm"
+            placeholder="Search People, emails, groups"
+          />
 
-
-
-
-      
-      <Combobox value={selectedPerson} onChange={setSelectedPerson}>
-      <div className="relative w-96 my-1 shadow-sm border-none">
-
-      <Combobox.Input  className="block w-full rounded-md border-none pl-2 pr-12  sm:text-sm" onChange={(event) => setQuery(event.target.value)} />
-      <div className="absolute inset-y-0 right-0 flex items-center">
-      <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-flex w-full rounded-md border-none bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-              Full access
+          <Menu as="div" className=" text-left">
+            <Menu.Button className="inline-flex rounded-md border-none bg-gray-100 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+              Access
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5"
                 aria-hidden="true"
               />
             </Menu.Button>
           </Menu>
-            <button
-              type="button"
-              class="py-1 px-2 text-sm font-medium text-gray-900 border-l border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10"
-            >
-              Invite
-            </button>
-          </div>
-        </div>
-      <Combobox.Options>
-        {filteredPeople.map((person) => (
-          <Combobox.Option key={person} value={person}>
-            {person}
-          </Combobox.Option>
-        ))}
-      </Combobox.Options>
-    </Combobox>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div className="flex p-1">
-          <div className="flex justify-between">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 mr-1"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-              />
-            </svg>
-
-            <span className="font-light">learn about sharing</span>
-          </div>
-
           <button
             type="button"
-            class="ml-10 font-medium text-sm text-center inline-flex items-center  text-gray-800"
+            class="ml-5 py-1 px-2 text-sm font-medium text-gray-900 border rounded-md bg-white border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-              />
-            </svg>
-            Copy link
+            Invite
           </button>
         </div>
       </div>
+
+      {selectedtags.length > 0 && (
+        <div>
+          <h2 class="mb-2 text-lg font-semibold text-gray-800">Selected:</h2>
+
+          {selectedtags.map((p) => (
+            <span
+              id="badge-dismiss-default"
+              class="inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-200"
+            >
+              {p}
+              <button
+                type="button"
+                class="inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-300 dark:hover:text-blue-900"
+                aria-label="Remove"
+                onClick={() => {
+                  setST(selectedtags.filter((a) => a != p));
+                  setPeople(peeps);
+                  setProducts(prods);
+                  
+                }}
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-3.5 h-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="sr-only">Remove badge</span>
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div>
+        {people.length > 0 && (
+          <div>
+            <h2 class="mb-2 text-lg font-semibold text-gray-800">
+              Select a person
+            </h2>
+            <ul class="space-y-1 max-w-md list-disc list-inside text-gray-700">
+              {people.map((p) => (
+                <li class="flex items-center">
+                  <button
+                    className="hover:bg-gray-400 w-full text-left rounded-md"
+                    onClick={() => {
+                      selectedtags.includes(p.name) || setST([...selectedtags, p.name]);
+                      setPeople(people.filter(pr => pr.name != p.name))
+                    }}
+                  >
+                    <img
+                      class="inline-block h-8 w-8 rounded-full ring-2 ring-gray-200 mr-3"
+                      src={p.url}
+                      alt=""
+                    />
+                    {p.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {products.length > 0 && (
+          <div>
+            <h2 class="mb-2 text-lg font-semibold text-gray-800">
+              Select a group
+            </h2>
+
+            {products.map((p) => (
+              <li class="flex items-center">
+                <button
+                  className="hover:bg-gray-400 w-full text-left rounded-md"
+                  onClick={() => {
+                    selectedtags.includes(p.name) || setST([...selectedtags, p.name]);
+                    setProducts(products.filter(pr => pr.name != p.name))
+                  }}
+                >
+                  <span class="inline-block h-8 w-8 rounded-full ring-2 bg-slate-500 ring-gray-200 mr-3 font-medium text-gray-200 text-center">
+                    {p.url}
+                  </span>
+                  {p.name}
+                </button>
+              </li>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <LearnMore />
     </div>
   );
+}
+
+function Tags({ setSB }) {
+  return <div className="flex flex-col gap-0 bg-gray-100 w-96"></div>;
 }
 
 export default SearchBox;

@@ -6,7 +6,7 @@ import DropDown from "./DropDown";
 import SearchBox from "./Searchbox";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [isSB, setSB] = useState(false);
 
   return (
     <div className="h-screen flex items-center justify-center">
@@ -29,33 +29,9 @@ function App() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute left-0 mt-2 w-80 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute left-0 mt-2 w-fit min-w-max origin-top-left divide-y divide-gray-100 rounded-md bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
-                    <DropDown/>
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-
-
-      <Menu as="div" className="relative inline-block text-left mx-5">
-        <div>
-          <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black  px-4 py-2 text-sm font-medium text-white  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            Searchbox
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute left-0 mt-2 w-96 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
-                    <SearchBox/>
+              { isSB ? <SearchBox setSB={setSB}/> : <DropDown setSB={setSB}/> }
             </div>
           </Menu.Items>
         </Transition>
